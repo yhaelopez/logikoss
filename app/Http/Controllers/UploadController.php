@@ -10,9 +10,10 @@ class UploadController extends Controller
     public function upload(UploadRequest $request)
     {
         $file = $request->file('avatar');
-        $filename = $file->getClientOriginalName();
+        $ext = $file->getClientOriginalExtension();
         $folder = uniqid() . '-' . now()->timestamp;
-        $file->storeAs('avatars/tmp/' . $folder, $filename);
+        $filename = uniqid(). '-' . now()->timestamp . '.' . $ext;
+        $file->storeAs('public/avatars/tmp/' . $folder, $filename);
 
         TemporaryFile::create([
             'folder' => $folder,
