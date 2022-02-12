@@ -29,7 +29,7 @@ class StoreUserRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             'avatar' => ['required', 'string'],
-            // 'role_id' => ['required', 'integer'],
+            'roles' => ['required', 'array'],
         ];
 
         return $rules;

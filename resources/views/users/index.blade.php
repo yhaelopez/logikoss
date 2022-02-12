@@ -10,16 +10,6 @@
             <div class="col-12 pt-4 text-center">
                 <a class="btn btn-success btn-lg" href="{{ route('users.create') }}">@lang('crear') <i class="bi bi-people-fill"></i></a>
             </div>
-            <div class="col-12 py-4">
-                <ul class="nav nav-pills">
-                    <li class="nav-item">
-                      <a class="nav-link @if(!request()->has('trashed')) bg-primary active @endif" @if(!request()->has('trashed')) aria-current="page" @endif href="{{ route( 'users.index') }}">Habilitados</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link @if(request()->has('trashed')) bg-danger active @endif" @if(request()->has('trashed')) aria-current="page" @endif href="{{ route( 'users.index', ['trashed'] ) }}">Deshabilitados</a>
-                    </li>
-                </ul>
-            </div>
             <div class="col-12">
 
                 <div class="table-responsive">
@@ -28,11 +18,11 @@
                             <tr>
                                 <th class="align-middle d-none d-sm-table-cell">@lang('actions')</th>
                                 <th class="align-middle d-none d-sm-table-cell">#</th>
+                                <th class="align-middle d-none d-sm-table-cell">@lang('roles')</th>
                                 <th class="align-middle d-none d-sm-table-cell">@lang('name')</th>
                                 <th class="align-middle d-none d-sm-table-cell">@lang('username')</th>
                                 <th class="align-middle d-none d-sm-table-cell">@lang('email')</th>
                                 <th class="align-middle d-none d-sm-table-cell">@lang('avatar')</th>
-                                {{-- <th class="align-middle d-none d-sm-table-cell">@lang('role')</th> --}}
                                 <th class="align-middle d-none d-sm-table-cell">@lang('created.at')</th>
                             </tr>
                         </thead>
@@ -51,6 +41,11 @@
                                     {{-- @endcan --}}
                                 </td>
                                 <td class="align-middle d-none d-sm-table-cell fw-bold">{{ $key+1 }}</td>
+                                <td class="align-middle d-none d-sm-table-cell">
+                                    @foreach ($user->roles as $role)
+                                        <span class="badge rounded-pill bg-primary">{{ $role->name }}</span>
+                                    @endforeach
+                                </td>
                                 <td class="align-middle d-none d-sm-table-cell">{{ $user->name }}</td>
                                 <td class="align-middle d-none d-sm-table-cell">{{ $user->username }}</td>
                                 <td class="align-middle d-none d-sm-table-cell">{{ $user->email }}</td>
@@ -59,29 +54,6 @@
                                     <img width="120px" src="{{ $user->getMedia('media')->last()->getUrl() }}" alt="avatar">
                                     @endif
                                 </td>
-                                {{-- <td class="align-middle d-none d-sm-table-cell">
-                                    @switch($user->roles[0]->id)
-                                        @case(1)
-                                            <span class="badge rounded-pill bg-dark">{{ $user->roles[0]->name }}</span>
-                                            @break
-                                        @case(2)
-                                            <span class="badge rounded-pill bg-danger">{{ $user->roles[0]->name }}</span>
-                                            @break
-                                        @case(3)
-                                            <span class="badge rounded-pill bg-primary">{{ $user->roles[0]->name }}</span>
-                                            @break
-                                        @case(4)
-                                            <span class="badge rounded-pill bg-success">{{ $user->roles[0]->name }}</span>
-                                            @break
-                                        @case(5)
-                                            <span class="badge rounded-pill bg-warning text-dark">{{ $user->roles[0]->name }}</span>
-                                            @break
-                                        @case(6)
-                                            <span class="badge rounded-pill bg-info text-dark">{{ $user->roles[0]->name }}</span>
-                                            @break
-                                        @default
-                                    @endswitch
-                                </td> --}}
                                 <td class="align-middle d-none d-sm-table-cell">{{ $user->created_at->formatLocalized('%e/%b/%Y') }}</td>
                             </tr>
                         @endforeach

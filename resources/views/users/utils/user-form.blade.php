@@ -7,15 +7,19 @@
                 <label for="name" class="form-label fw-bold">@lang('name')</label>
                 <input  @if(isset($disabled)) disabled @endif value="@if(isset($user)){{ $user->name }}@endif" name="name" id="name" autocomplete="name"  class="form-control form-control-lg" placeholder="@lang('name')" required autofocus>
             </div>
-            {{-- <div class="col-md-6">
-                <label for="role_id" class="form-label fw-bold">@lang('role')</label>
-                <select name="role_id" id="role_id" class="form-select form-select-lg" required>
-                    <option value="" @if(!isset($user)) selected @endif disabled>- @lang('seleccione') -</option>
-                    @foreach ($roles as $role)
-                    <option value="{{ $role->id }}" @if(isset($user)) @if(($user->hasRole($role->id))) selected @endif @endif>{{ $role->name }}</option>
-                    @endforeach
-                </select>
-            </div> --}}
+            <div class="col-md-6">
+                <label for="role_id" class="form-label fw-bold">@lang('roles')</label>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                            @foreach ($roles as $role)
+                                <input @if(isset($user)) @if($user->hasRole($role->name)) checked @endif @endif type="checkbox" class="btn-check" id="role{{ $role->id }}" value="{{ $role->id }}" name="roles[]" autocomplete="off">
+                                <label class="btn btn-outline-primary" for="role{{ $role->id }}">{{ $role->name }}</label>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="form-group row my-4">
             <div class="col-md-6">

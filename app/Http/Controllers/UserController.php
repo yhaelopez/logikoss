@@ -8,18 +8,21 @@ use App\Models\TemporaryFile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+
 
 class UserController extends Controller
 {
     public function index()
     {
-        $users = User::where('id', '>', 1)->get();
+        $users = User::with(['roles'])->where('id', '>', 1)->get();
         return view('users.index', compact('users'));
     }
 
     public function create()
     {
-        return view('users.create');
+        $roles = Role::get();
+        return view('users.create', compact('roles'));
     }
 
     public function store(StoreUserRequest $request)
@@ -31,6 +34,8 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
             'email_verified_at' => now()
         ]);
+
+        $user->assignRole($request->roles);
 
         $temporaryFile = TemporaryFile::whereFolder($request->avatar)->first();
 
@@ -52,7 +57,9 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('users.edit', compact('user'));
+        $roles = Role::get();
+        $user->load('roles');
+        return view('users.edit', compact('user', 'roles'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
@@ -80,8 +87,8 @@ class UserController extends Controller
             }
         }
 
-
         $user->update($data);
+        $user->syncRoles($request->roles);
         return redirect()->route('users.index')->withSuccess(__('user.update.success', ['user' => $user->username]));
     }
 
