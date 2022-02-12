@@ -26,20 +26,39 @@
                     <table id="users" class="table table-hover">
                         <thead>
                             <tr>
+                                <th class="align-middle d-none d-sm-table-cell">@lang('actions')</th>
                                 <th class="align-middle d-none d-sm-table-cell">#</th>
                                 <th class="align-middle d-none d-sm-table-cell">@lang('name')</th>
+                                <th class="align-middle d-none d-sm-table-cell">@lang('username')</th>
                                 <th class="align-middle d-none d-sm-table-cell">@lang('email')</th>
+                                <th class="align-middle d-none d-sm-table-cell">@lang('avatar')</th>
                                 {{-- <th class="align-middle d-none d-sm-table-cell">@lang('role')</th> --}}
                                 <th class="align-middle d-none d-sm-table-cell">@lang('created.at')</th>
-                                <th class="align-middle d-none d-sm-table-cell">@lang('acciones')</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($users as $key => $user)
                             <tr>
+                                <td class="align-middle text-nowrap">
+                                    <a href="{{ route('users.show', ['user' => $user]) }}" type="button" class="btn btn-info"><i class="bi bi-eye-fill"></i></a>
+                                    <a href="{{ route('users.edit', ['user' => $user]) }}" type="button" class="btn btn-warning"><i class="bi bi-pencil-fill"></i></a>
+                                    {{-- @can('delete', $user) --}}
+                                    <form class="d-inline" action="{{ route('users.destroy', ['user' => $user]) }}" method="post" class="p-0 m-0">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger"><i class="bi bi-trash-fill"></i></i></button>
+                                    </form>
+                                    {{-- @endcan --}}
+                                </td>
                                 <td class="align-middle d-none d-sm-table-cell fw-bold">{{ $key+1 }}</td>
                                 <td class="align-middle d-none d-sm-table-cell">{{ $user->name }}</td>
+                                <td class="align-middle d-none d-sm-table-cell">{{ $user->username }}</td>
                                 <td class="align-middle d-none d-sm-table-cell">{{ $user->email }}</td>
+                                <td class="align-middle d-none d-sm-table-cell">
+                                    @if ($user->getMedia('media')->last()->getUrl())
+                                    <img width="120px" src="{{ $user->getMedia('media')->last()->getUrl() }}" alt="avatar">
+                                    @endif
+                                </td>
                                 {{-- <td class="align-middle d-none d-sm-table-cell">
                                     @switch($user->roles[0]->id)
                                         @case(1)
@@ -64,17 +83,6 @@
                                     @endswitch
                                 </td> --}}
                                 <td class="align-middle d-none d-sm-table-cell">{{ $user->created_at->formatLocalized('%e/%b/%Y') }}</td>
-                                <td class="align-middle text-nowrap">
-                                    <a href="{{ route('users.show', ['user' => $user]) }}" type="button" class="btn btn-info"><i class="bi bi-eye-fill"></i></a>
-                                    <a href="{{ route('users.edit', ['user' => $user]) }}" type="button" class="btn btn-warning"><i class="bi bi-pencil-fill"></i></a>
-                                    {{-- @can('delete', $user) --}}
-                                    <form class="d-inline" action="{{ route('users.destroy', ['user' => $user]) }}" method="post" class="p-0 m-0">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger"><i class="bi bi-trash-fill"></i></i></button>
-                                    </form>
-                                    {{-- @endcan --}}
-                                </td>
                             </tr>
                         @endforeach
                         </tbody>

@@ -51,4 +51,9 @@ class User extends Authenticatable implements HasMedia
             ->addMediaCollection('avatars')
             ->useDisk('avatars');
     }
+
+     public function avatar()
+     {
+         return $this->media()->where('collection_name', 'public')->first();
+     }
 }

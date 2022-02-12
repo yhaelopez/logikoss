@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::get();
+        $users = User::where('id', '>', 1)->get();
         return view('users.index', compact('users'));
     }
 
@@ -37,7 +37,7 @@ class UserController extends Controller
         if($temporaryFile) {
             $user->addMedia(
                 storage_path("app/public/avatars/tmp/$request->avatar/$temporaryFile->filename")
-            )->toMediaCollection('public');
+            )->toMediaCollection('media');
             rmdir(storage_path("app/public/avatars/tmp/$request->avatar"));
             $temporaryFile->delete();
         }
@@ -74,7 +74,7 @@ class UserController extends Controller
             if($temporaryFile) {
                 $user->addMedia(
                     storage_path("app/public/avatars/tmp/$request->avatar/$temporaryFile->filename")
-                )->toMediaCollection('public');
+                )->toMediaCollection('media');
                 rmdir(storage_path("app/public/avatars/tmp/$request->avatar"));
                 $temporaryFile->delete();
             }

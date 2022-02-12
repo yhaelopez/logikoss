@@ -33,9 +33,9 @@
 <script>
     window.onload = (e) => {
         // Get a reference to the file input element
-        const cabanaFotos = document.querySelector('input[id="filepond"]');
+        const fileInput = document.querySelector('input[id="filepond"]');
         // Create a FilePond instance
-        const cabanaFotosFilepond = FilePond.create(cabanaFotos, {
+        const filepondConf = FilePond.create(fileInput, {
             acceptedFileTypes: ['image/*'],
         });
 
