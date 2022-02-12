@@ -8,3 +8,8 @@
 <p>npm run prod</p>
 <p>php artisan ser</p>
 <p>php artisan test (consola aparte)</p>
+
+http://127.0.0.1/login
+
+email: yhaelopez@gmail.com
+password: abcd1234
