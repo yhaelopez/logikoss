@@ -1,9 +1,11 @@
-@if (count($errors) > 0)
-    @foreach ($errors->all() as $error)
-        <div class="alert alert-danger ">
-            <p class="h4 mb-0 text-center">{{$error}}</p>
-        </div>
-    @endforeach
+@if (isset($errors))
+    @if (count($errors) > 0)
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-danger ">
+                <p class="h4 mb-0 text-center">{{$error}}</p>
+            </div>
+        @endforeach
+    @endif
 @endif
 
 @if (session('success'))

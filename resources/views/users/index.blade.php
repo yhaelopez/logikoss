@@ -50,7 +50,7 @@
                                 <td class="align-middle d-none d-sm-table-cell">{{ $user->username }}</td>
                                 <td class="align-middle d-none d-sm-table-cell">{{ $user->email }}</td>
                                 <td class="align-middle d-none d-sm-table-cell">
-                                    @if ($user->getMedia('media')->last()->getUrl())
+                                    @if ($user->getMedia('media')->last())
                                     <img width="120px" src="{{ $user->getMedia('media')->last()->getUrl() }}" alt="avatar">
                                     @endif
                                 </td>
