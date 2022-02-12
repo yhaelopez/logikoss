@@ -5,6 +5,6 @@
 <p>php artisan storage:link</p>
 <p>php artisan migrate --seed</p>
 <p>npm install</p>
-<p>npm run dev</p>
+<p>npm run prod</p>
 <p>php artisan ser</p>
 <p>php artisan test (consola aparte)</p>
