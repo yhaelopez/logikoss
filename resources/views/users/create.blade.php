@@ -16,7 +16,7 @@
 
                 @include('users.utils.user-form', [
                     'ruta' => route('users.store', [
-                        // 'roles' => $roles
+                        'roles' => $roles
                     ])
                 ])
 

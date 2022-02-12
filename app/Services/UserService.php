@@ -26,16 +26,16 @@ class UserService
 
         if($temporaryFile) {
             $user->addMedia(
-                storage_path("app/public/avatars/tmp/$request->avatar/$temporaryFile->filename")
+                storage_path("app/public/files/tmp/$request->avatar/$temporaryFile->filename")
             )->toMediaCollection('media');
-            rmdir(storage_path("app/public/avatars/tmp/$request->avatar"));
+            rmdir(storage_path("app/public/files/tmp/$request->avatar"));
             $temporaryFile->delete();
         }
 
         return $user;
     }
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user) : User
     {
         $data = [
             'email' => $request->email,
@@ -53,9 +53,9 @@ class UserService
 
             if($temporaryFile) {
                 $user->addMedia(
-                    storage_path("app/public/avatars/tmp/$request->avatar/$temporaryFile->filename")
+                    storage_path("app/public/files/tmp/$request->avatar/$temporaryFile->filename")
                 )->toMediaCollection('media');
-                rmdir(storage_path("app/public/avatars/tmp/$request->avatar"));
+                rmdir(storage_path("app/public/files/tmp/$request->avatar"));
                 $temporaryFile->delete();
             }
         }

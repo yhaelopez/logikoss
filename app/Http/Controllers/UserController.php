@@ -14,6 +14,7 @@ class UserController extends Controller
 
     public function __construct(UserService $userService)
     {
+        $this->authorizeResource(User::class);
         $this->userService = $userService;
     }
 
@@ -38,7 +39,8 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        $roles = Role::get();
+        return view('users.show', compact('user', 'roles'));
     }
 
     public function edit(User $user)

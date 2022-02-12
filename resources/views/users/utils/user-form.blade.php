@@ -55,5 +55,14 @@
                     </button>
                 </div>
             </div>
+
+        @else
+
+            <div class="form-group row my-4">
+                <label for="content" class="form-label fw-bold">@lang('avatar')</label>
+                <div class="col-md-12">
+                    <img width="150px" src="{{ $user->getMedia('media')->last()->getUrl() }}" alt="post">
+                </div>
+            </div>
         @endif
     </form>
